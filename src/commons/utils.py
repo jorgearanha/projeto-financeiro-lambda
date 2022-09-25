@@ -1,5 +1,6 @@
 import json
 import re
+import unicodedata
 
 from requests import Response
 from requests.structures import CaseInsensitiveDict
@@ -79,3 +80,13 @@ def check_errors(errors, logger=config.logger(__name__)):
 def check_only_numbers(value, msg=None):
     if not re.match(r"^[0-9]*$", value):
         raise ValidationError(msg or 'Is not a valid number.')
+
+
+def normalize(str):
+
+    # Unicode normalize transforma um caracter em seu equivalente em latin.
+    nfkd = unicodedata.normalize('NFKD', str)
+    palavraSemAcento = u"".join([c for c in nfkd if not unicodedata.combining(c)])
+
+    # Usa expressão regular para retornar a palavra apenas com números, letras e espaço
+    return re.sub('[^a-zA-Z0-9 \\\]', '', palavraSemAcento)

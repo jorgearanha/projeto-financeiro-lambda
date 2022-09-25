@@ -1,6 +1,7 @@
 import json
 
 from decimal import *
+from src.commons.utils import normalize
 from src.https import HttpResponse
 from src.exceptions import HttpBaseException
 
@@ -9,7 +10,7 @@ class Entrada:
 
     def __init__(self, obj: dict):
         try:
-            code = str.upper((obj['descricao'][::3] + str(obj['referencia'])).replace(' ', ''))
+            code = normalize(str.upper((obj['descricao'][::3] + str(obj['referencia'])).replace(' ', '')))
             self.id_code = obj.get('id_code', code)
             self.referencia = int(obj['referencia'])
             self.valor = float(obj['valor'])

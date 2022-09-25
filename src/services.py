@@ -13,7 +13,7 @@ class AccountsService(ServiceBaseDynamoDB):
         return super().get(self.entradas_table)
 
     def get_entradas_by_referencia(self, referencia):
-        return super().get_by_filter(self.entradas_table, 'referencia', int(referencia))
+        return super().get_by_filter(self.entradas_table, 'id_code', referencia)
 
     def post_entrada(self, entrada):
         super().post(self.entradas_table, entrada.get(), 'id_code')
@@ -29,7 +29,7 @@ class AccountsService(ServiceBaseDynamoDB):
         return super().get(self.saidas_table)
 
     def get_saidas_by_referencia(self, referencia):
-        return super().get_by_filter(self.saidas_table, 'referencia', int(referencia))
+        return super().get_by_filter(self.saidas_table, 'id_code', referencia)
 
     def post_saida(self, saida):
         return super().post(self.saidas_table, saida.get(), 'id_code')
